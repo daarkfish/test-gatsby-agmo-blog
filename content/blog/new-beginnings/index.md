@@ -1,6 +1,6 @@
 ---
-title: New Beginnings
-date: "2015-05-28T22:40:32.169Z"
+title: Test Post
+date: "2024-05-28T22:40:32.169Z"
 description: This is a custom description for SEO and Open Graph purposes, rather than the default generated excerpt. Simply add a description field to the frontmatter.
 ---
 
@@ -8,6 +8,98 @@ Far far away, behind the word mountains, far from the countries Vokalia and
 Consonantia, there live the blind texts. Separated they live in Bookmarksgrove
 right at the coast of the Semantics, a large language ocean. A small river named
 Duden flows by their place and supplies it with the necessary regelialia.
+
+# Password Validation Component in React Native
+
+This React Native component validates a password based on specific criteria:
+- Minimum 8 characters
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one number
+
+```javascript
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+
+const PasswordValidation = () => {
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const validations = [
+    {
+      test: (pwd) => /(?=.{8,})/.test(pwd),
+      message: 'Password must be at least 8 characters long.'
+    },
+    {
+      test: (pwd) => /(?=.*[A-Z])/.test(pwd),
+      message: 'Password must contain at least one uppercase letter.'
+    },
+    {
+      test: (pwd) => /(?=.*[a-z])/.test(pwd),
+      message: 'Password must contain at least one lowercase letter.'
+    },
+    {
+      test: (pwd) => /(?=.*[0-9])/.test(pwd),
+      message: 'Password must contain at least one number.'
+    }
+  ];
+
+  const validatePassword = (pwd) => {
+    const error = validations.find(validation => !validation.test(pwd));
+    return error ? error.message : '';
+  };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+    setErrorMessage(validatePassword(text));
+  };
+
+  const handleSubmit = () => {
+    const validationResult = validatePassword(password);
+    setErrorMessage(validationResult);
+    if (!validationResult) {
+      alert('Password is valid!');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>Enter Password:</Text>
+      <TextInput
+        style={styles.input}
+        secureTextEntry
+        value={password}
+        onChangeText={handlePasswordChange}
+      />
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+      <Button title="Submit" onPress={handleSubmit} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10,
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
+  },
+});
+
+```
+
 
 ## On deer horse aboard tritely yikes and much
 
